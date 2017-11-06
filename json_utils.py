@@ -34,114 +34,97 @@ except:
 
 
 def feature_full(feature):
-	ret = True 
+	'''
+		feature_full(feature) 
+				return True if the feature is full
+				else return False 
+	'''
 	try:
 		feature['Label']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['nRow']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['nCol']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Ratio_band1_0_band2_1_scale_1']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Ratio_band1_0_band2_1_scale_2']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Ratio_band1_0_band2_1_scale_4']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Ratio_band1_0_band2_2_scale_2']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Ratio_band1_0_band2_2_scale_4']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Ratio_band1_0_band2_3_scale_1']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Ratio_band1_0_band2_3_scale_2']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Ratio_band1_0_band2_3_scale_4']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Ratio_band1_1_band2_2_scale_1']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Ratio_band1_1_band2_2_scale_2']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Ratio_band1_1_band2_2_scale_4']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Ratio_band1_1_band2_3_scale_1']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Ratio_band1_1_band2_3_scale_2']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Ratio_band1_1_band2_3_scale_4']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Ratio_band1_2_band2_3_scale_1']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Ratio_band1_2_band2_3_scale_2']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Ratio_band1_2_band2_3_scale_4']
 	except:
-		ret = False
-
+		return False
 	try:
 		feature['Patch'][feature['nRow']*feature['nCol']]
 	except:
-		ret = False
+		return False
 
-
-	return ret 
+	return True 
 
 
 def extract_patch_from_json(json_filename, path_save):
