@@ -33,6 +33,117 @@ except:
 
 
 
+def feature_full(feature):
+	ret = True 
+	try:
+		feature['Label']
+	except:
+		ret = False
+
+	try:
+		feature['nRow']
+	except:
+		ret = False
+
+	try:
+		feature['nCol']
+	except:
+		ret = False
+
+	try:
+		feature['Ratio_band1_0_band2_1_scale_1']
+	except:
+		ret = False
+
+	try:
+		feature['Ratio_band1_0_band2_1_scale_2']
+	except:
+		ret = False
+
+	try:
+		feature['Ratio_band1_0_band2_1_scale_4']
+	except:
+		ret = False
+
+	try:
+		feature['Ratio_band1_0_band2_2_scale_2']
+	except:
+		ret = False
+
+	try:
+		feature['Ratio_band1_0_band2_2_scale_4']
+	except:
+		ret = False
+
+	try:
+		feature['Ratio_band1_0_band2_3_scale_1']
+	except:
+		ret = False
+
+	try:
+		feature['Ratio_band1_0_band2_3_scale_2']
+	except:
+		ret = False
+
+	try:
+		feature['Ratio_band1_0_band2_3_scale_4']
+	except:
+		ret = False
+
+	try:
+		feature['Ratio_band1_1_band2_2_scale_1']
+	except:
+		ret = False
+
+	try:
+		feature['Ratio_band1_1_band2_2_scale_2']
+	except:
+		ret = False
+
+	try:
+		feature['Ratio_band1_1_band2_2_scale_4']
+	except:
+		ret = False
+
+	try:
+		feature['Ratio_band1_1_band2_3_scale_1']
+	except:
+		ret = False
+
+	try:
+		feature['Ratio_band1_1_band2_3_scale_2']
+	except:
+		ret = False
+
+	try:
+		feature['Ratio_band1_1_band2_3_scale_4']
+	except:
+		ret = False
+
+	try:
+		feature['Ratio_band1_2_band2_3_scale_1']
+	except:
+		ret = False
+
+	try:
+		feature['Ratio_band1_2_band2_3_scale_2']
+	except:
+		ret = False
+
+	try:
+		feature['Ratio_band1_2_band2_3_scale_4']
+	except:
+		ret = False
+
+	try:
+		feature['Patch'][feature['nRow']*feature['nCol']]
+	except:
+		ret = False
+
+
+	return ret 
+
+
 def extract_patch_from_json(json_filename, path_save):
 	'''
 		extract_patch_from_json(json_filename, path_save)
@@ -49,61 +160,61 @@ def extract_patch_from_json(json_filename, path_save):
 	feature = {}
 	num_feature = 0
 	for prefix, event, value in parser:
-		if prefix == "features.item.Label":
-			feature['Label'] = value
-		if prefix == "features.item.nRow":
-			feature['nRow'] = value
-		if prefix == "features.item.nCol":
-			feature['nCol'] = value
-		if prefix == "features.item.Ratio_band1_0_band2_1_scale_1":
-			feature['Ratio_band1_0_band2_1_scale_1'] = str(value)
-		if prefix == "features.item.Ratio_band1_0_band2_1_scale_2":
-			feature['Ratio_band1_0_band2_1_scale_2'] = str(value)
-		if prefix == "features.item.Ratio_band1_0_band2_1_scale_4":
-			feature['Ratio_band1_0_band2_1_scale_4'] = str(value)
-		if prefix == "features.item.Ratio_band1_0_band2_2_scale_1":
-			feature['Ratio_band1_0_band2_2_scale_1'] = str(value)
-		if prefix == "features.item.Ratio_band1_0_band2_2_scale_2":
-			feature['Ratio_band1_0_band2_2_scale_2'] = str(value)
-		if prefix == "features.item.Ratio_band1_0_band2_2_scale_4":
-			feature['Ratio_band1_0_band2_2_scale_4'] = str(value)
-		if prefix == "features.item.Ratio_band1_0_band2_3_scale_1":
-			feature['Ratio_band1_0_band2_3_scale_1'] = str(value)
-		if prefix == "features.item.Ratio_band1_0_band2_3_scale_2":
-			feature['Ratio_band1_0_band2_3_scale_2'] = str(value)
-		if prefix == "features.item.Ratio_band1_0_band2_3_scale_4":
-			feature['Ratio_band1_0_band2_3_scale_4'] = str(value)
-		if prefix == "features.item.Ratio_band1_1_band2_2_scale_1":
-			feature['Ratio_band1_1_band2_2_scale_1'] = str(value)
-		if prefix == "features.item.Ratio_band1_1_band2_2_scale_2":
-			feature['Ratio_band1_1_band2_2_scale_2'] = str(value)
-		if prefix == "features.item.Ratio_band1_1_band2_2_scale_4":
-			feature['Ratio_band1_1_band2_2_scale_4'] = str(value)
-		if prefix == "features.item.Ratio_band1_1_band2_3_scale_1":
-			feature['Ratio_band1_1_band2_3_scale_1'] = str(value)
-		if prefix == "features.item.Ratio_band1_1_band2_3_scale_2":
-			feature['Ratio_band1_1_band2_3_scale_2'] = str(value)
-		if prefix == "features.item.Ratio_band1_1_band2_3_scale_4":
-			feature['Ratio_band1_1_band2_3_scale_4'] = str(value)
-		if prefix == "features.item.Ratio_band1_2_band2_3_scale_1":
-			feature['Ratio_band1_2_band2_3_scale_1'] = str(value)
-		if prefix == "features.item.Ratio_band1_2_band2_3_scale_2":
-			feature['Ratio_band1_2_band2_3_scale_2'] = str(value)
-		if prefix == "features.item.Ratio_band1_2_band2_3_scale_4":
-			feature['Ratio_band1_2_band2_3_scale_4'] = str(value)
-
-		if prefix == "features.item.Patch" and event == "start_array":
-			patch = []
-		if prefix == "features.item.Patch.item":
-			patch.append(value) 
-		if prefix == "features.item.Patch" and event == "end_array":
-			feature['Patch'] = patch
+		if feature_full(feature):
 			with open(path_save + "feature_" + str(num_feature) + ".json", 'w') as outfile:  
 					json.dump(feature, outfile)
-    		# begin a new feature 
+			print("Saving in " + path_save + "feature_" + str(num_feature) + ".json")
 			feature = {}
 			num_feature += 1
+		if prefix == "features.item.Label":
+			feature['Label'] = value
+		elif prefix == "features.item.nRow":
+			feature['nRow'] = value
+		elif prefix == "features.item.nCol":
+			feature['nCol'] = value
+		elif prefix == "features.item.Ratio_band1_0_band2_1_scale_1":
+			feature['Ratio_band1_0_band2_1_scale_1'] = str(value)
+		elif prefix == "features.item.Ratio_band1_0_band2_1_scale_2":
+			feature['Ratio_band1_0_band2_1_scale_2'] = str(value)
+		elif prefix == "features.item.Ratio_band1_0_band2_1_scale_4":
+			feature['Ratio_band1_0_band2_1_scale_4'] = str(value)
+		elif prefix == "features.item.Ratio_band1_0_band2_2_scale_1":
+			feature['Ratio_band1_0_band2_2_scale_1'] = str(value)
+		elif prefix == "features.item.Ratio_band1_0_band2_2_scale_2":
+			feature['Ratio_band1_0_band2_2_scale_2'] = str(value)
+		elif prefix == "features.item.Ratio_band1_0_band2_2_scale_4":
+			feature['Ratio_band1_0_band2_2_scale_4'] = str(value)
+		elif prefix == "features.item.Ratio_band1_0_band2_3_scale_1":
+			feature['Ratio_band1_0_band2_3_scale_1'] = str(value)
+		elif prefix == "features.item.Ratio_band1_0_band2_3_scale_2":
+			feature['Ratio_band1_0_band2_3_scale_2'] = str(value)
+		elif prefix == "features.item.Ratio_band1_0_band2_3_scale_4":
+			feature['Ratio_band1_0_band2_3_scale_4'] = str(value)
+		elif prefix == "features.item.Ratio_band1_1_band2_2_scale_1":
+			feature['Ratio_band1_1_band2_2_scale_1'] = str(value)
+		elif prefix == "features.item.Ratio_band1_1_band2_2_scale_2":
+			feature['Ratio_band1_1_band2_2_scale_2'] = str(value)
+		elif prefix == "features.item.Ratio_band1_1_band2_2_scale_4":
+			feature['Ratio_band1_1_band2_2_scale_4'] = str(value)
+		elif prefix == "features.item.Ratio_band1_1_band2_3_scale_1":
+			feature['Ratio_band1_1_band2_3_scale_1'] = str(value)
+		elif prefix == "features.item.Ratio_band1_1_band2_3_scale_2":
+			feature['Ratio_band1_1_band2_3_scale_2'] = str(value)
+		elif prefix == "features.item.Ratio_band1_1_band2_3_scale_4":
+			feature['Ratio_band1_1_band2_3_scale_4'] = str(value)
+		elif prefix == "features.item.Ratio_band1_2_band2_3_scale_1":
+			feature['Ratio_band1_2_band2_3_scale_1'] = str(value)
+		elif prefix == "features.item.Ratio_band1_2_band2_3_scale_2":
+			feature['Ratio_band1_2_band2_3_scale_2'] = str(value)
+		elif prefix == "features.item.Ratio_band1_2_band2_3_scale_4":
+			feature['Ratio_band1_2_band2_3_scale_4'] = str(value)
 
+		elif prefix == "features.item.Patch" and event == "start_array":
+			patch = []
+		elif prefix == "features.item.Patch.item":
+			patch.append(value) 
+		elif prefix == "features.item.Patch" and event == "end_array":
+			feature['Patch'] = patch
 
 
 
