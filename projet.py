@@ -25,13 +25,9 @@
 
 
 try:
-    import ijson
-    import numpy as np
-    import matplotlib.pyplot as plt
-    import scipy.misc
-    from PIL import Image
+    from json_utils import *
 except:
-    print("Import Error : Please install required module")
+    print("Import Error")
 
 
 
@@ -112,11 +108,17 @@ def concatenate_img(path, filename, nb_img, img_size, start, lines, columns):
 
 
 if __name__ == '__main__':        
-    json = 'features_set_0.json' #large
+   # json = 'features_set_0.json' #large
     #json = '../part_features_set.json' #small
 
-    path='./images/'
+    #path='./images/'
 
-    extract_img_from_json(json, path, nb_img=37*37)
+    #extract_img_from_json(json, path, nb_img=37*37)
 
-    concatenate_img(path, './results/r1.jpg', 37*37, 24, 1, 37, 37)
+   # concatenate_img(path, './results/r1.jpg', 37*37, 24, 1, 37, 37)
+
+   # adapt you json path to file 
+   json_filename = '../../json/part_features_set.json'
+# adapt you json path to file 
+   path_save = '../../json/features/'
+   extract_patch_from_json(json_filename, path_save)
