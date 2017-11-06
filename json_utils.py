@@ -144,9 +144,9 @@ def extract_patch_from_json(json_filename, path_save):
 	num_feature = 0
 	for prefix, event, value in parser:
 		if feature_full(feature):
-			with open(path_save + "feature_" + str(num_feature) + ".json", 'w') as outfile:  
+			with open(path_save + "feature_" + str(num_feature) + "_label_" + str(feature['Label']) + ".json", 'w') as outfile:  
 					json.dump(feature, outfile)
-			print("Saving in " + path_save + "feature_" + str(num_feature) + ".json")
+			print("Saving in " + path_save + "feature_" + str(num_feature) + "_label_" + str(feature['Label']) + ".json")
 			feature = {}
 			num_feature += 1
 		if prefix == "features.item.Label":
@@ -204,5 +204,5 @@ def extract_patch_from_json(json_filename, path_save):
 if __name__ == '__main__':        
 	json_filename = '../../json/features_set_0.json'
 	# adapt you json path to file 
-	path_save = '../../json/features/'
+	path_save = '../../json/features_labelise/'
 	extract_patch_from_json(json_filename, path_save)
