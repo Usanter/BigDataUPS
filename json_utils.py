@@ -24,12 +24,32 @@
 try:
 	import json 
 	import ijson
+	import re 
+	import os 
 	import numpy as np
 	import matplotlib.pyplot as plt
 	import scipy.misc
 	from PIL import Image
 except:
 	print("Import Error : Please install required module")
+
+#############################################################
+
+
+def example_regex_function(features_folder, label):
+	#expr = r"feature_*_label_" + label + r".json"
+	expr = re.compile('feature_[0-9]*_label_%s.json'%label)
+	l = os.listdir(features_folder)
+	nb_feature_label = 0
+	nb_file = 0
+	for filename in l:
+		nb_file += 1
+		#print filename
+		if expr.match(filename):
+			nb_feature_label +=1 
+
+	print ("Il y a " + str(nb_feature_label) + " feature labelisé " + str(label))
+	print ("sur " + str(nb_file) + " feature")
 
 
 
@@ -205,4 +225,5 @@ if __name__ == '__main__':
 	json_filename = '../../json/features_set_0.json'
 	# adapt you json path to file 
 	path_save = '../../json/features_labelise/'
-	extract_patch_from_json(json_filename, path_save)
+	#extract_patch_from_json(json_filename, path_save)
+	example_regex_function(path_save, 14)
