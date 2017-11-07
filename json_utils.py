@@ -44,7 +44,6 @@ def example_regex_function(features_folder, label):
 	nb_file = 0
 	for filename in l:
 		nb_file += 1
-		#print filename
 		if expr.match(filename):
 			nb_feature_label +=1 
 
