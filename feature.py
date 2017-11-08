@@ -103,7 +103,7 @@ class Feature(object):
 	####################################
 
 	def get_patch_in_array(self):
-		return np.asarray(data)reshape((self.nRow,self.nCol,4))
+		return np.asarray(self.patch).reshape((self.nRow,self.nCol,4))
 
 
 	###################################
