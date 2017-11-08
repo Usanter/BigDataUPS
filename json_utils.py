@@ -423,6 +423,23 @@ if __name__ == '__main__':
 		with open(path_save + f, 'r') as file:
 			feature = json.load(file)
 		features.append(Feature(feature['Label'], feature['nRow'], feature['nCol']))
+		set_ratio_band(feature['Ratio_band1_0_band2_1_scale_1'], \
+				feature['Ratio_band1_0_band2_1_scale_2'], \
+				feature['Ratio_band1_0_band2_1_scale_4'], \
+				feature['Ratio_band1_0_band2_2_scale_2'], \
+				feature['Ratio_band1_0_band2_2_scale_4'], \
+				feature['Ratio_band1_0_band2_3_scale_1'], \
+				feature['Ratio_band1_0_band2_3_scale_2'], \
+				feature['Ratio_band1_0_band2_3_scale_4'], \
+				feature['Ratio_band1_1_band2_2_scale_1'], \
+				feature['Ratio_band1_1_band2_2_scale_2'], \
+				feature['Ratio_band1_1_band2_2_scale_4'], \
+				feature['Ratio_band1_1_band2_3_scale_1'], \
+				feature['Ratio_band1_1_band2_3_scale_2'], \
+				feature['Ratio_band1_1_band2_3_scale_4'], \
+				feature['Ratio_band1_2_band2_3_scale_1'], \
+				feature['Ratio_band1_2_band2_3_scale_2'], \
+				feature['Ratio_band1_2_band2_3_scale_4'])
 		features[-1].set_patch(feature['Patch'])
 		file.close()
 
