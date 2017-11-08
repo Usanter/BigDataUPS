@@ -26,6 +26,7 @@ try:
 	import ijson
 	import re 
 	import os 
+	import csv 
 	import numpy as np
 	import matplotlib.pyplot as plt
 	import scipy.misc
@@ -49,6 +50,184 @@ def example_regex_function(features_folder, label):
 
 	print ("Il y a " + str(nb_feature_label) + " feature labelisé " + str(label))
 	print ("sur " + str(nb_file) + " feature")
+
+
+def compute_mean_var_ratio(features_folder, csv_filename):
+	'''
+		compute_mean_std(feature_folder)
+				compute the mean and the std of each label 
+	'''
+	nb_label = 17 
+
+	Ratio_band1_0_band2_1_scale_1 = [[] for i in range(nb_label)]
+	Ratio_band1_0_band2_1_scale_2 = [[] for i in range(nb_label)]
+	Ratio_band1_0_band2_1_scale_4 = [[] for i in range(nb_label)]
+	Ratio_band1_0_band2_2_scale_2 = [[] for i in range(nb_label)]
+	Ratio_band1_0_band2_2_scale_4 = [[] for i in range(nb_label)]
+	Ratio_band1_0_band2_3_scale_1 = [[] for i in range(nb_label)]
+	Ratio_band1_0_band2_3_scale_2 = [[] for i in range(nb_label)]
+	Ratio_band1_0_band2_3_scale_4 = [[] for i in range(nb_label)]
+	Ratio_band1_1_band2_2_scale_1 = [[] for i in range(nb_label)]
+	Ratio_band1_1_band2_2_scale_2 = [[] for i in range(nb_label)]
+	Ratio_band1_1_band2_2_scale_4 = [[] for i in range(nb_label)]
+	Ratio_band1_1_band2_3_scale_1 = [[] for i in range(nb_label)]
+	Ratio_band1_1_band2_3_scale_2 = [[] for i in range(nb_label)]
+	Ratio_band1_1_band2_3_scale_4 = [[] for i in range(nb_label)]
+	Ratio_band1_2_band2_3_scale_1 = [[] for i in range(nb_label)]
+	Ratio_band1_2_band2_3_scale_2 = [[] for i in range(nb_label)]
+	Ratio_band1_2_band2_3_scale_4 = [[] for i in range(nb_label)]
+
+	nb_feature_per_label = [0 for i in range(nb_label)]
+
+	l = os.listdir(features_folder)
+	for filename in l:
+		print ("computing data in : " + features_folder + filename)
+		with open(features_folder + filename, 'r') as f:
+			feature = json.load(f)
+
+		# update nb_feature_per_label 
+		nb_feature_per_label[feature['Label']] += 1
+
+		# update ratio band 
+		Ratio_band1_0_band2_1_scale_1[feature['Label']].append(float(feature['Ratio_band1_0_band2_1_scale_1']))
+		Ratio_band1_0_band2_1_scale_2[feature['Label']].append(float(feature['Ratio_band1_0_band2_1_scale_2']))
+		Ratio_band1_0_band2_1_scale_4[feature['Label']].append(float(feature['Ratio_band1_0_band2_1_scale_4']))
+		Ratio_band1_0_band2_2_scale_2[feature['Label']].append(float(feature['Ratio_band1_0_band2_2_scale_2']))
+		Ratio_band1_0_band2_2_scale_4[feature['Label']].append(float(feature['Ratio_band1_0_band2_2_scale_4']))
+		Ratio_band1_0_band2_3_scale_1[feature['Label']].append(float(feature['Ratio_band1_0_band2_3_scale_1']))
+		Ratio_band1_0_band2_3_scale_2[feature['Label']].append(float(feature['Ratio_band1_0_band2_3_scale_2']))
+		Ratio_band1_0_band2_3_scale_4[feature['Label']].append(float(feature['Ratio_band1_0_band2_3_scale_4']))
+		Ratio_band1_1_band2_2_scale_1[feature['Label']].append(float(feature['Ratio_band1_1_band2_2_scale_1']))
+		Ratio_band1_1_band2_2_scale_2[feature['Label']].append(float(feature['Ratio_band1_1_band2_2_scale_2']))
+		Ratio_band1_1_band2_2_scale_4[feature['Label']].append(float(feature['Ratio_band1_1_band2_2_scale_4']))
+		Ratio_band1_1_band2_3_scale_1[feature['Label']].append(float(feature['Ratio_band1_1_band2_3_scale_1']))
+		Ratio_band1_1_band2_3_scale_2[feature['Label']].append(float(feature['Ratio_band1_1_band2_3_scale_2']))
+		Ratio_band1_1_band2_3_scale_4[feature['Label']].append(float(feature['Ratio_band1_1_band2_3_scale_4']))
+		Ratio_band1_2_band2_3_scale_1[feature['Label']].append(float(feature['Ratio_band1_2_band2_3_scale_1']))
+		Ratio_band1_2_band2_3_scale_2[feature['Label']].append(float(feature['Ratio_band1_2_band2_3_scale_2']))
+		Ratio_band1_2_band2_3_scale_4[feature['Label']].append(float(feature['Ratio_band1_2_band2_3_scale_4']))
+
+
+	Ratio_band1_0_band2_1_scale_1_mean = [0.0 for i in range(nb_label)]
+	Ratio_band1_0_band2_1_scale_2_mean = [0.0 for i in range(nb_label)]
+	Ratio_band1_0_band2_1_scale_4_mean = [0.0 for i in range(nb_label)]
+	Ratio_band1_0_band2_2_scale_2_mean = [0.0 for i in range(nb_label)]
+	Ratio_band1_0_band2_2_scale_4_mean = [0.0 for i in range(nb_label)]
+	Ratio_band1_0_band2_3_scale_1_mean = [0.0 for i in range(nb_label)]
+	Ratio_band1_0_band2_3_scale_2_mean = [0.0 for i in range(nb_label)]
+	Ratio_band1_0_band2_3_scale_4_mean = [0.0 for i in range(nb_label)]
+	Ratio_band1_1_band2_2_scale_1_mean = [0.0 for i in range(nb_label)]
+	Ratio_band1_1_band2_2_scale_2_mean = [0.0 for i in range(nb_label)]
+	Ratio_band1_1_band2_2_scale_4_mean = [0.0 for i in range(nb_label)]
+	Ratio_band1_1_band2_3_scale_1_mean = [0.0 for i in range(nb_label)]
+	Ratio_band1_1_band2_3_scale_2_mean = [0.0 for i in range(nb_label)]
+	Ratio_band1_1_band2_3_scale_4_mean = [0.0 for i in range(nb_label)]
+	Ratio_band1_2_band2_3_scale_1_mean = [0.0 for i in range(nb_label)]
+	Ratio_band1_2_band2_3_scale_2_mean = [0.0 for i in range(nb_label)]
+	Ratio_band1_2_band2_3_scale_4_mean = [0.0 for i in range(nb_label)]
+
+	Ratio_band1_0_band2_1_scale_1_var = [0.0 for i in range(nb_label)]
+	Ratio_band1_0_band2_1_scale_2_var = [0.0 for i in range(nb_label)]
+	Ratio_band1_0_band2_1_scale_4_var = [0.0 for i in range(nb_label)]
+	Ratio_band1_0_band2_2_scale_2_var = [0.0 for i in range(nb_label)]
+	Ratio_band1_0_band2_2_scale_4_var = [0.0 for i in range(nb_label)]
+	Ratio_band1_0_band2_3_scale_1_var = [0.0 for i in range(nb_label)]
+	Ratio_band1_0_band2_3_scale_2_var = [0.0 for i in range(nb_label)]
+	Ratio_band1_0_band2_3_scale_4_var = [0.0 for i in range(nb_label)]
+	Ratio_band1_1_band2_2_scale_1_var = [0.0 for i in range(nb_label)]
+	Ratio_band1_1_band2_2_scale_2_var = [0.0 for i in range(nb_label)]
+	Ratio_band1_1_band2_2_scale_4_var = [0.0 for i in range(nb_label)]
+	Ratio_band1_1_band2_3_scale_1_var = [0.0 for i in range(nb_label)]
+	Ratio_band1_1_band2_3_scale_2_var = [0.0 for i in range(nb_label)]
+	Ratio_band1_1_band2_3_scale_4_var = [0.0 for i in range(nb_label)]
+	Ratio_band1_2_band2_3_scale_1_var = [0.0 for i in range(nb_label)]
+	Ratio_band1_2_band2_3_scale_2_var = [0.0 for i in range(nb_label)]
+	Ratio_band1_2_band2_3_scale_4_var = [0.0 for i in range(nb_label)]
+
+	# compute mean and var 
+	for label in range(nb_label):
+		Ratio_band1_0_band2_1_scale_1_mean[label] = np.mean(Ratio_band1_0_band2_1_scale_1[label])
+		Ratio_band1_0_band2_1_scale_2_mean[label] = np.mean(Ratio_band1_0_band2_1_scale_2[label])
+		Ratio_band1_0_band2_1_scale_4_mean[label] = np.mean(Ratio_band1_0_band2_1_scale_4[label])
+		Ratio_band1_0_band2_2_scale_2_mean[label] = np.mean(Ratio_band1_0_band2_2_scale_2[label])
+		Ratio_band1_0_band2_2_scale_4_mean[label] = np.mean(Ratio_band1_0_band2_2_scale_4[label])
+		Ratio_band1_0_band2_3_scale_1_mean[label] = np.mean(Ratio_band1_0_band2_3_scale_1[label])
+		Ratio_band1_0_band2_3_scale_2_mean[label] = np.mean(Ratio_band1_0_band2_3_scale_2[label])
+		Ratio_band1_0_band2_3_scale_4_mean[label] = np.mean(Ratio_band1_0_band2_3_scale_4[label])
+		Ratio_band1_1_band2_2_scale_1_mean[label] = np.mean(Ratio_band1_1_band2_2_scale_1[label])
+		Ratio_band1_1_band2_2_scale_2_mean[label] = np.mean(Ratio_band1_1_band2_2_scale_2[label])
+		Ratio_band1_1_band2_2_scale_4_mean[label] = np.mean(Ratio_band1_1_band2_2_scale_4[label])
+		Ratio_band1_1_band2_3_scale_1_mean[label] = np.mean(Ratio_band1_1_band2_3_scale_1[label])
+		Ratio_band1_1_band2_3_scale_2_mean[label] = np.mean(Ratio_band1_1_band2_3_scale_2[label])
+		Ratio_band1_1_band2_3_scale_4_mean[label] = np.mean(Ratio_band1_1_band2_3_scale_4[label])
+		Ratio_band1_2_band2_3_scale_1_mean[label] = np.mean(Ratio_band1_2_band2_3_scale_1[label])
+		Ratio_band1_2_band2_3_scale_2_mean[label] = np.mean(Ratio_band1_2_band2_3_scale_2[label])
+		Ratio_band1_2_band2_3_scale_4_mean[label] = np.mean(Ratio_band1_2_band2_3_scale_4[label])
+
+		Ratio_band1_0_band2_1_scale_1_var[label] = np.var(Ratio_band1_0_band2_1_scale_1[label])
+		Ratio_band1_0_band2_1_scale_2_var[label] = np.var(Ratio_band1_0_band2_1_scale_2[label])
+		Ratio_band1_0_band2_1_scale_4_var[label] = np.var(Ratio_band1_0_band2_1_scale_4[label])
+		Ratio_band1_0_band2_2_scale_2_var[label] = np.var(Ratio_band1_0_band2_2_scale_2[label])
+		Ratio_band1_0_band2_2_scale_4_var[label] = np.var(Ratio_band1_0_band2_2_scale_4[label])
+		Ratio_band1_0_band2_3_scale_1_var[label] = np.var(Ratio_band1_0_band2_3_scale_1[label])
+		Ratio_band1_0_band2_3_scale_2_var[label] = np.var(Ratio_band1_0_band2_3_scale_2[label])
+		Ratio_band1_0_band2_3_scale_4_var[label] = np.var(Ratio_band1_0_band2_3_scale_4[label])
+		Ratio_band1_1_band2_2_scale_1_var[label] = np.var(Ratio_band1_1_band2_2_scale_1[label])
+		Ratio_band1_1_band2_2_scale_2_var[label] = np.var(Ratio_band1_1_band2_2_scale_2[label])
+		Ratio_band1_1_band2_2_scale_4_var[label] = np.var(Ratio_band1_1_band2_2_scale_4[label])
+		Ratio_band1_1_band2_3_scale_1_var[label] = np.var(Ratio_band1_1_band2_3_scale_1[label])
+		Ratio_band1_1_band2_3_scale_2_var[label] = np.var(Ratio_band1_1_band2_3_scale_2[label])
+		Ratio_band1_1_band2_3_scale_4_var[label] = np.var(Ratio_band1_1_band2_3_scale_4[label])
+		Ratio_band1_2_band2_3_scale_1_var[label] = np.var(Ratio_band1_2_band2_3_scale_1[label])
+		Ratio_band1_2_band2_3_scale_2_var[label] = np.var(Ratio_band1_2_band2_3_scale_2[label])
+		Ratio_band1_2_band2_3_scale_4_var[label] = np.var(Ratio_band1_2_band2_3_scale_4[label])
+
+	# prepare in order to save in csv 
+	data = [Ratio_band1_0_band2_1_scale_1_mean, \
+	Ratio_band1_0_band2_1_scale_2_mean, \
+	Ratio_band1_0_band2_1_scale_4_mean , \
+	Ratio_band1_0_band2_2_scale_2_mean , \
+	Ratio_band1_0_band2_2_scale_4_mean , \
+	Ratio_band1_0_band2_3_scale_1_mean , \
+	Ratio_band1_0_band2_3_scale_2_mean , \
+	Ratio_band1_0_band2_3_scale_4_mean , \
+	Ratio_band1_1_band2_2_scale_1_mean , \
+	Ratio_band1_1_band2_2_scale_2_mean , \
+	Ratio_band1_1_band2_2_scale_4_mean , \
+	Ratio_band1_1_band2_3_scale_1_mean , \
+	Ratio_band1_1_band2_3_scale_2_mean , \
+	Ratio_band1_1_band2_3_scale_4_mean , \
+	Ratio_band1_2_band2_3_scale_1_mean , \
+	Ratio_band1_2_band2_3_scale_2_mean , \
+	Ratio_band1_2_band2_3_scale_4_mean , \
+
+	Ratio_band1_0_band2_1_scale_1_var, \
+	Ratio_band1_0_band2_1_scale_2_var, \
+	Ratio_band1_0_band2_1_scale_4_var, \
+	Ratio_band1_0_band2_2_scale_2_var, \
+	Ratio_band1_0_band2_2_scale_4_var, \
+	Ratio_band1_0_band2_3_scale_1_var, \
+	Ratio_band1_0_band2_3_scale_2_var, \
+	Ratio_band1_0_band2_3_scale_4_var, \
+	Ratio_band1_1_band2_2_scale_1_var, \
+	Ratio_band1_1_band2_2_scale_2_var, \
+	Ratio_band1_1_band2_2_scale_4_var, \
+	Ratio_band1_1_band2_3_scale_1_var, \
+	Ratio_band1_1_band2_3_scale_2_var, \
+	Ratio_band1_1_band2_3_scale_4_var, \
+	Ratio_band1_2_band2_3_scale_1_var, \
+	Ratio_band1_2_band2_3_scale_2_var, \
+	Ratio_band1_2_band2_3_scale_4_var]
+
+	legend_row = ['label %d'%i for i in range(nb_label)]
+	# save the csv 
+	with open(csv_filename, "wb") as csv_file:
+		writer = csv.writer(csv_file, delimiter=',')
+		writer.writerow(legend_row)
+		i = 0
+		for line in data:
+			writer.writerow(line)
+			i += 1
 
 
 
@@ -220,9 +399,14 @@ def extract_patch_from_json(json_filename, path_save):
 
 
 
-if __name__ == '__main__':        
+if __name__ == '__main__':
+	#json_filename = '../../json/part_features_set.json'
+	#path_save = '../../json/feature_test/'
 	json_filename = '../../json/features_set_0.json'
-	# adapt you json path to file 
 	path_save = '../../json/features_labelise/'
+
+	#example_regex_function(path_save, 14)
 	#extract_patch_from_json(json_filename, path_save)
-	example_regex_function(path_save, 14)
+
+	csv_filename = '../../json/mean_var/mean_var_ratio.csv'
+	compute_mean_var_ratio(path_save, csv_filename)
