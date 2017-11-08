@@ -31,6 +31,7 @@ try:
 	import matplotlib.pyplot as plt
 	import scipy.misc
 	from PIL import Image
+	from feature import *
 except:
 	print("Import Error : Please install required module")
 
