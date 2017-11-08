@@ -20,6 +20,7 @@
 ### Research and Teaching only ###
 ##################################
 
+import numpy as np
 
 class Feature(object):
 	'''
@@ -100,6 +101,9 @@ class Feature(object):
 	####################################
 	########## Getter methods ##########
 	####################################
+
+	def get_patch_in_array(self):
+		return np.asarray(data)reshape((self.nRow,self.nCol,4))
 
 
 	###################################
