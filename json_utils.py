@@ -413,19 +413,18 @@ if __name__ == '__main__':
 
 
 
+	features = []
+	l = os.listdir(path_save)
+	nb_Patch = 37 * 37
+	feature_list = l[:nb_Patch]
 
-	# 8go RAM + 8go swap is not enouh
-	#
-	#features = []
-	#l = os.listdir(path_save)
-	#i = 0
-	#for f in l:
-	#	print(i)
-		#print ("computing data in : " + path_save + f)
-	#	with open(path_save + f, 'r') as file:
-	#		feature = json.load(file)
-#
-	#	features.append(Feature(feature['Label'], feature['nRow'], feature['nCol']))
-	#	features[-1].set_patch(feature['Patch'])
-	#	file.close()
-	#	i+=1
+	for f in feature_list:
+		print ("computing data from : " + path_save + f + " to the image")
+		with open(path_save + f, 'r') as file:
+			feature = json.load(file)
+		features.append(Feature(feature['Label'], feature['nRow'], feature['nCol']))
+		features[-1].set_patch(feature['Patch'])
+		file.close()
+
+	img_feature = Image_feature(37, 37, features)
+
