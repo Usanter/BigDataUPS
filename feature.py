@@ -115,12 +115,16 @@ class Feature(object):
 
 
 
-class Feature_Set(object):
+class Image_feature(object):
 	'''
 		class Feature_Set :
 			attribute : 
 				- set : Feature list
 	'''
 
-	def __init__(self, feature_list):
+	def __init__(self, nPatchRow, nPatchCol, feature_list):
+		self.nPatchRow = nPatchRow
+		self.nPatchCol = nPatchCol
 		self.feature_list = feature_list
+
+		

@@ -39,7 +39,6 @@ except:
 
 
 def example_regex_function(features_folder, label):
-	#expr = r"feature_*_label_" + label + r".json"
 	expr = re.compile('feature_[0-9]*_label_%s.json'%label)
 	l = os.listdir(features_folder)
 	nb_feature_label = 0
@@ -410,4 +409,23 @@ if __name__ == '__main__':
 	#extract_patch_from_json(json_filename, path_save)
 
 	csv_filename = '../../json/mean_var/mean_var_ratio.csv'
-	compute_mean_var_ratio(path_save, csv_filename)
+	#compute_mean_var_ratio(path_save, csv_filename)
+
+
+
+
+	# 8go RAM + 8go swap is not enouh
+	#
+	#features = []
+	#l = os.listdir(path_save)
+	#i = 0
+	#for f in l:
+	#	print(i)
+		#print ("computing data in : " + path_save + f)
+	#	with open(path_save + f, 'r') as file:
+	#		feature = json.load(file)
+#
+	#	features.append(Feature(feature['Label'], feature['nRow'], feature['nCol']))
+	#	features[-1].set_patch(feature['Patch'])
+	#	file.close()
+	#	i+=1
