@@ -399,6 +399,38 @@ def extract_patch_from_json(json_filename, path_save):
 
 
 
+def create_image_test(path_features, nb_features):
+	features = []
+	l = os.listdir(path_features)
+	for f in l:
+		if int(f.split('_')[1]) < nb_features:
+			print ("computing data from : " + path_save + f + " to the image")
+			with open(path_save + f, 'r') as file:
+				feature = json.load(file)
+			features.append(Feature(feature['Label'], feature['nRow'], feature['nCol']))
+			features[-1].set_ratio_band(feature['Ratio_band1_0_band2_1_scale_1'], \
+					feature['Ratio_band1_0_band2_1_scale_2'], \
+					feature['Ratio_band1_0_band2_1_scale_4'], \
+					feature['Ratio_band1_0_band2_2_scale_2'], \
+					feature['Ratio_band1_0_band2_2_scale_4'], \
+					feature['Ratio_band1_0_band2_3_scale_1'], \
+					feature['Ratio_band1_0_band2_3_scale_2'], \
+					feature['Ratio_band1_0_band2_3_scale_4'], \
+					feature['Ratio_band1_1_band2_2_scale_1'], \
+					feature['Ratio_band1_1_band2_2_scale_2'], \
+					feature['Ratio_band1_1_band2_2_scale_4'], \
+					feature['Ratio_band1_1_band2_3_scale_1'], \
+					feature['Ratio_band1_1_band2_3_scale_2'], \
+					feature['Ratio_band1_1_band2_3_scale_4'], \
+					feature['Ratio_band1_2_band2_3_scale_1'], \
+					feature['Ratio_band1_2_band2_3_scale_2'], \
+					feature['Ratio_band1_2_band2_3_scale_4'])
+			features[-1].set_patch(feature['Patch'])
+			file.close()
+
+	return Image_feature(37, 37, features)
+
+
 if __name__ == '__main__':
 	#json_filename = '../../json/part_features_set.json'
 	#path_save = '../../json/feature_test/'
@@ -412,36 +444,5 @@ if __name__ == '__main__':
 	#compute_mean_var_ratio(path_save, csv_filename)
 
 
-
-	features = []
-	l = os.listdir(path_save)
-	nb_Patch = 37 * 37
-	feature_list = l[:nb_Patch]
-
-	for f in feature_list:
-		print ("computing data from : " + path_save + f + " to the image")
-		with open(path_save + f, 'r') as file:
-			feature = json.load(file)
-		features.append(Feature(feature['Label'], feature['nRow'], feature['nCol']))
-		set_ratio_band(feature['Ratio_band1_0_band2_1_scale_1'], \
-				feature['Ratio_band1_0_band2_1_scale_2'], \
-				feature['Ratio_band1_0_band2_1_scale_4'], \
-				feature['Ratio_band1_0_band2_2_scale_2'], \
-				feature['Ratio_band1_0_band2_2_scale_4'], \
-				feature['Ratio_band1_0_band2_3_scale_1'], \
-				feature['Ratio_band1_0_band2_3_scale_2'], \
-				feature['Ratio_band1_0_band2_3_scale_4'], \
-				feature['Ratio_band1_1_band2_2_scale_1'], \
-				feature['Ratio_band1_1_band2_2_scale_2'], \
-				feature['Ratio_band1_1_band2_2_scale_4'], \
-				feature['Ratio_band1_1_band2_3_scale_1'], \
-				feature['Ratio_band1_1_band2_3_scale_2'], \
-				feature['Ratio_band1_1_band2_3_scale_4'], \
-				feature['Ratio_band1_2_band2_3_scale_1'], \
-				feature['Ratio_band1_2_band2_3_scale_2'], \
-				feature['Ratio_band1_2_band2_3_scale_4'])
-		features[-1].set_patch(feature['Patch'])
-		file.close()
-
-	img_feature = Image_feature(37, 37, features)
-
+	nb_features = 37 * 37 
+	img = create_image_test(path_save, nb_features)
