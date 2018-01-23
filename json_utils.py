@@ -404,27 +404,27 @@ def create_image_test(path_features, nb_features):
 	l = os.listdir(path_features)
 	for f in l:
 		if int(f.split('_')[1]) < nb_features:
-			print ("computing data from : " + path_save + f + " to the image")
-			with open(path_save + f, 'r') as file:
+			print ("computing data from : " + path_features + f + " to the image")
+			with open(path_features + f, 'r') as file:
 				feature = json.load(file)
 			features.append(Feature(feature['Label'], feature['nRow'], feature['nCol']))
-			features[-1].set_ratio_band(feature['Ratio_band1_0_band2_1_scale_1'], \
-					feature['Ratio_band1_0_band2_1_scale_2'], \
-					feature['Ratio_band1_0_band2_1_scale_4'], \
-					feature['Ratio_band1_0_band2_2_scale_2'], \
-					feature['Ratio_band1_0_band2_2_scale_4'], \
-					feature['Ratio_band1_0_band2_3_scale_1'], \
-					feature['Ratio_band1_0_band2_3_scale_2'], \
-					feature['Ratio_band1_0_band2_3_scale_4'], \
-					feature['Ratio_band1_1_band2_2_scale_1'], \
-					feature['Ratio_band1_1_band2_2_scale_2'], \
-					feature['Ratio_band1_1_band2_2_scale_4'], \
-					feature['Ratio_band1_1_band2_3_scale_1'], \
-					feature['Ratio_band1_1_band2_3_scale_2'], \
-					feature['Ratio_band1_1_band2_3_scale_4'], \
-					feature['Ratio_band1_2_band2_3_scale_1'], \
-					feature['Ratio_band1_2_band2_3_scale_2'], \
-					feature['Ratio_band1_2_band2_3_scale_4'])
+			features[-1].set_ratio_band(float(feature['Ratio_band1_0_band2_1_scale_1']), \
+					float(feature['Ratio_band1_0_band2_1_scale_2']), \
+					float(feature['Ratio_band1_0_band2_1_scale_4']), \
+					float(feature['Ratio_band1_0_band2_2_scale_2']), \
+					float(feature['Ratio_band1_0_band2_2_scale_4']), \
+					float(feature['Ratio_band1_0_band2_3_scale_1']), \
+					float(feature['Ratio_band1_0_band2_3_scale_2']), \
+					float(feature['Ratio_band1_0_band2_3_scale_4']), \
+					float(feature['Ratio_band1_1_band2_2_scale_1']), \
+					float(feature['Ratio_band1_1_band2_2_scale_2']), \
+					float(feature['Ratio_band1_1_band2_2_scale_4']), \
+					float(feature['Ratio_band1_1_band2_3_scale_1']), \
+					float(feature['Ratio_band1_1_band2_3_scale_2']), \
+					float(feature['Ratio_band1_1_band2_3_scale_4']), \
+					float(feature['Ratio_band1_2_band2_3_scale_1']), \
+					float(feature['Ratio_band1_2_band2_3_scale_2']), \
+					float(feature['Ratio_band1_2_band2_3_scale_4']))
 			features[-1].set_patch(feature['Patch'])
 			file.close()
 

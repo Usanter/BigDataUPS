@@ -25,8 +25,8 @@ import numpy as np
 class Feature(object):
 	'''
 		class Feature :
-			attribute : 
-				- label : int 
+			attribute :
+				- label : int
 				- nRow : int
 				- nCol : int
 				- Ratio_band1_0_band2_1_scale_1 : float
@@ -46,12 +46,12 @@ class Feature(object):
 				- Ratio_band1_2_band2_3_scale_1 : float
 				- Ratio_band1_2_band2_3_scale_2 : float
 				- Ratio_band1_2_band2_3_scale_4 : float
-				- patch : int list 
+				- patch : int list
 	'''
 
 	def __init__(self, label, nRow, nCol):
-		self.label = label 
-		self.nRow = nRow 
+		self.label = label
+		self.nRow = nRow
 		self.nCol = nCol
 
 	####################################
@@ -94,7 +94,7 @@ class Feature(object):
 		self.Ratio_band1_2_band2_3_scale_4 = Ratio_band1_2_band2_3_scale_4
 
 	def set_patch(self, patch):
-		self.patch = patch 
+		self.patch = patch
 
 
 
@@ -104,6 +104,31 @@ class Feature(object):
 
 	def get_patch_in_array(self):
 		return np.asarray(self.patch).reshape((self.nRow,self.nCol,4))
+
+
+	def get_feature_in_array(self):
+		ret = []
+		ret.append(self.Ratio_band1_0_band2_1_scale_1)
+		ret.append(self.Ratio_band1_0_band2_1_scale_2)
+		ret.append(self.Ratio_band1_0_band2_1_scale_4)
+		ret.append(self.Ratio_band1_0_band2_2_scale_2)
+		ret.append(self.Ratio_band1_0_band2_2_scale_4)
+		ret.append(self.Ratio_band1_0_band2_3_scale_1)
+		ret.append(self.Ratio_band1_0_band2_3_scale_2)
+		ret.append(self.Ratio_band1_0_band2_3_scale_4)
+		ret.append(self.Ratio_band1_1_band2_2_scale_1)
+		ret.append(self.Ratio_band1_1_band2_2_scale_2)
+		ret.append(self.Ratio_band1_1_band2_2_scale_4)
+		ret.append(self.Ratio_band1_1_band2_3_scale_1)
+		ret.append(self.Ratio_band1_1_band2_3_scale_2)
+		ret.append(self.Ratio_band1_1_band2_3_scale_4)
+		ret.append(self.Ratio_band1_2_band2_3_scale_1)
+		ret.append(self.Ratio_band1_2_band2_3_scale_2)
+		ret.append(self.Ratio_band1_2_band2_3_scale_4)
+		for elem in self.patch:
+			ret.append(elem)
+
+		return np.array(ret)
 
 
 	###################################
@@ -119,8 +144,8 @@ class Image_feature(object):
 	'''
 		class Image_feature :
 			attribute :
-				- nPatchRow : int 
-				- nPatchCol : int  
+				- nPatchRow : int
+				- nPatchCol : int
 				- feature_list : Feature list
 	'''
 
@@ -129,3 +154,18 @@ class Image_feature(object):
 		self.nPatchCol = nPatchCol
 		self.feature_list = feature_list
 
+
+
+
+	####################################
+	########## Getter methods ##########
+	####################################
+
+	def get_image_in_matrix(self):
+		ret = []
+		for row in range(self.nPatchRow):
+			line = []
+			for col in range(self.nPatchCol):
+				line.append(self.feature_list[row * self.nPatchRow + col].get_feature_in_array())
+			ret.append(line)
+		return np.array(ret)
